@@ -1,0 +1,56 @@
+- Reset boot sequence for Arm Coretex M4
+- Build Process in C
+	+ Preprocessor
+	input: *.c -> *.i
+		+Replace #define, #if, #include
+		+Remove Comment
+	+ Compile
+	input: *.i -> *.s or *.asm
+	    + Front end:
+			+Scan all of text and identify error, syntax -> throw some error
+			+Detect var undeclared,.... -> throw error
+		+ Back end:
+		    +Optimization code: 2 option (smaller or faster) -> remove dead code, 
+			+Generation code: generate *.s, not one to one specific on architech, instruction set
+	+ Assembler
+	input: *.s -> *.obj or *.o
+		+ Modern compiler can generate *.o at compile step (it means no need assemler)
+		+ Structure of object file:
+		     *text 
+			 *data
+			 *bss
+			 *stack
+			 *heap
+			 Symboltable (a table which included name, type and scope of variable)
+			 Debug_infor (for debbuger)
+			 __Export (extern for other file)
+			 __import  (import from other file)
+			 
+	+ Linker
+	input: all of object file + lib -> single object file (relocatble file)
+	    +Symbol resolution: scan in single file and mark unsymbol with no reference, mark resolvedsymbol when find out the reference in other file (transalation unit)
+		+Section mergeing: merge arcording to same section and put relavtive address (start at 0)
+	+ Locator
+	 Linker script
+	 ELF, Bin, Hex -> flash into chip and run
+	 
+- Vitural memory (linux) - MMU (memory management unit)
+    + No need to care about overlap memory, kernel manage and controll memory resoucre
+	+ One process has a virtual memory
+	+ Manage page descriptor, has atribute for memory cell on page
+	+ Page table to look up virtual address and physical address
+	+ Cache memory between virtual memmory and physical memory (need to use sync to force sync up)
+
+- Variable
+Basic data type: char, int, float, doulbe, void
+Derived data type: unsigned, short, long
+3 attribute of a variable:
++ Scope
++ Lifetime
++ Memory
+
+- Optimization code
++ Size: remove deadcode, not use inline calls
++ Speed: Global register allocation, remove deadcode, inline calls, use bit shift instead of operation, asm, argothism
+- Pointer
+
